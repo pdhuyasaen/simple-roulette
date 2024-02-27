@@ -5,45 +5,56 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public Player player => Player.GetInstance();
-    public Bot bot => Bot.GetInstance();
+    public Player player => Player.Instance;
+    public Bot bot => Bot.Instance;
 
     public RoundController roundController => RoundController.Instance;
-    
+    public UIManager uiManager => UIManager.Instance;
+    public Gun gun => Gun.Instance;
 
     // Start is called before the first frame update
     void Start()
     {
-        LevelStart();
+        GameStart();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void GameStart()
+    public void GameStart()
     {
-
+        uiManager.OnGameStart();
     }
 
-    void LevelStart(/*int level*/)
+    public void LevelStart(int level = 1)
     {
         player.OnStartLevel();
         bot.OnStartLevel();
+        uiManager.OnLevelStart();
+
         NextRound();
     }
 
-    void NextRound()
+    public void NextRound()
     {
         roundController.OnStartRound();
+        gun.OnStartRound(4);
     }
 
-    void NextTurn()
+    public void NextTurn()
     {
 
     }
 
-    
+    public void OnShoot(Unit unitTarget)
+    {
+        var b = gun.OnShoot();
+        unitTarget.TakeDamage(b.BulletState);
+        Debug.Log(unitTarget.ToString()+" take damage "+ b.BulletState);
+    }
+
+
 }

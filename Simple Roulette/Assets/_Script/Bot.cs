@@ -5,19 +5,28 @@ using UnityEngine;
 
 public class Bot : Unit
 {
-    private static Bot instance;
+    protected static Bot instance;
     private Bot()
     {
 
     }
 
-    public static Bot GetInstance()
+    public static Bot Instance
     {
-        if (instance == null)
+        get
         {
-            instance = new Bot();
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Bot>();
+                if (instance == null)
+                {
+                    var obj = new GameObject();
+                    instance = obj.AddComponent<Bot>();
+                }
+            }
+
+            return instance;
         }
-        return instance;
     }
 
 }

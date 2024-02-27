@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    private static Player instance;
+    protected static Player instance;
     private Player()
     {
         
     }
 
-    public static Player GetInstance()
+    public static Player Instance
     {
-        if (instance == null)
+        get
         {
-            instance = new Player();
-        }
-        return instance;
-    }
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Player>();
+                if (instance == null)
+                {
+                    var obj = new GameObject();
+                    instance = obj.AddComponent<Player>();
+                }
+            }
 
+            return instance;
+        }
+    }
 }

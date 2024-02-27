@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour
     public void OnStartLevel()
     {
         current_HP = level_HP;
+        Debug.Log(this.ToString() + " setup HP");
     }
 
     public virtual bool CheckDead()
@@ -33,7 +34,7 @@ public class Unit : MonoBehaviour
     public void TakeDamage(int damage)
     {
         current_HP -= damage;
-        CheckDead();
+        if (CheckDead()) Debug.Log(this.ToString() + " is dead");
     }
 
 }

@@ -36,11 +36,12 @@ public class Gun : Singleton<Gun>
         }
     }
 
-    public void OnShoot()
+    public Bullet OnShoot()
     {
         Bullet shootedBullet = bulletList[bulletList.Count-1];
         Debug.Log(shootedBullet.BulletState);
         bulletList.RemoveAt(bulletList.Count-1);
+        return shootedBullet;
     }
 
     public void OnCheck()
